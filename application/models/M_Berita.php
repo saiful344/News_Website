@@ -13,8 +13,12 @@ class M_Berita extends CI_Model{
 		return $this->db->count_all($table);
 	} 
 	public function ambil_id($table,$where){
-		$this->db->where('level',$where);
+		$this->db->where_not_in('level',$where);
 		return $this->db->get($table)->result();
+	}
+	public function ambil_id_admin($table,$where){
+		$this->db->where_not_in('level',$where);
+	return $this->db->get($table)->result();
 	}
 	public function create($table,$data){
 		$this->db->insert($table,$data);
@@ -64,5 +68,9 @@ class M_Berita extends CI_Model{
 		$this->db->from('kategori');
 		$this->db->like('nama',$keyword);
 		return $this->db->get();
+	}
+	function update_where($table,$data,$id){
+		$this->db->where('id',$id);
+		$this->db->update($table,$data);
 	}
 }

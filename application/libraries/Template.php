@@ -1,5 +1,4 @@
 <?php
-
 class Template {
 	protected $_ci;
 
@@ -25,5 +24,13 @@ class Template {
 
 		$this->_ci->load->view('content/header/index',$data);   
 	}
-
+	function generate($view,$data = array(),$filename = 'laporan',$paper = 'A4',$orientation ='portrait'){
+		$dompdf= new HTML2PDF();
+		$html =$this->_ci->load->view($view,$data,TRUE);
+		$dompdf->loadHtml($html);
+		$dompdf->setPaper($paper,$orientation);
+		//Render html as pdf
+		$dompdf->render();
+		$dompdf->stream($filename."_.pdf_",array("Attachment" => FALSE));
+	}
 }

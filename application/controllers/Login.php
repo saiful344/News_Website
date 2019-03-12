@@ -28,8 +28,11 @@ class Login extends CI_Controller {
                     $this->session->set_userdata('level',$valid_user->level);
                     switch($valid_user->level){
                         case 'user';
+                        $this->session->set_userdata('id',$valid_user->id);
+                        $this->session->set_userdata('username',$valid_user->username);
                             redirect('user/User');
                         case 'admin';
+                            $this->session->set_userdata('username',$valid_user->username);
                             $this->session->set_flashdata('flash','Login');
                             redirect('News');
                         default:
@@ -77,4 +80,9 @@ class Login extends CI_Controller {
         $hash= password_hash($password,PASSWORD_BCRYPT);
         return $hash;
     }
+    public function logout(){
+        $this->session->sess_destroy();
+        $this->load->view('login');
+    }
+    
 }

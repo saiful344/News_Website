@@ -65,6 +65,9 @@
                        <a href="<?= site_url("News/delete/").$b->id;?>" class="btn btn-icons btn-rounded btn-outline-danger data-hapus">
                           <i class="fas fa-trash-alt"></i>
                         </a>
+                         <a href="<?= site_url("News/view/").$b->id;?>" class="btn btn-icons btn-rounded btn-outline-warning data-hapus float-right">
+                          <i class="fas fa-eye"></i>
+                        </a>
                         </div>
                           </td>
                         </tr>

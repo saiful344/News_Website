@@ -27,10 +27,12 @@
                       <div class="col-md-6">
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Kategory</label>
-                          <div class="col-sm-9">
-                            <input type="text" name="kategori" id="kategori" class="form-control">
-                            <div id="kategorilist"></div>
-                          </div>
+                          <select class="selectpicker" data-live-search="true" name="kategori">
+                            <?php foreach($katalog as $k):?>
+                            <option data-tokens="<?= $k->nama ;?>" valuew="<?= $k->nama ;?>"><?= $k->nama ;?></option>
+                          <?php endforeach ;?>
+                          </select>
+
                         </div>
                       </div>
                        <div class="col-md-6">

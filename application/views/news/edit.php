@@ -30,10 +30,11 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Kategory</label>
                           <div class="col-sm-9">
-                            <select class="form-control" name="kategori" value="<?= $content['kategori'] ?>">
-                              <option>--choice--</option>
-                              <option>Female</option>
-                            </select>
+                          <select class="selectpicker" data-live-search="true" name="kategori" ">
+                            <?php foreach($katalog as $k):?>
+                            <option data-tokens="<?= $k->nama ;?>" selected="<?= $content['kategori'];?> value="<?= $k->nama ;?>"><?= $k->nama ;?></option>
+                          <?php endforeach ;?>
+                          </select>
                           </div>
                         </div>
                       </div>
@@ -41,7 +42,7 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label" name="date">Date</label>
                           <div class="col-sm-9">
-                            <input class="form-control" type="date" name="tanggal" placeholder="dd/mm/yyyy" value="<?= $content['tgl_b'] ?>" />
+                            <input class="form-control tanggal" data-date-format="dd-mm-yyyy" size="16" type="text" value="<?= $content['tgl_b'] ;?>"  name="tanggal">
                           </div>
                         </div>
                       </div>

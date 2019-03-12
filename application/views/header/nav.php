@@ -25,7 +25,7 @@
                   <img src="<?= base_url();?>assets/images/faces/face4.jpg" alt="image" class="profile-pic">
                 </div>
                 <div class="preview-item-content flex-grow">
-                  <h6 class="preview-subject ellipsis font-weight-medium text-dark">David Grey
+                  <h6 class="preview-subject ellipsis font-weight-medium text-dark">jaja
                     <span class="float-right font-weight-light small-text">1 Minutes ago</span>
                   </h6>
                   <p class="font-weight-light small-text">
@@ -120,7 +120,7 @@
           </li>
           <li class="nav-item dropdown d-none d-xl-inline-block">
             <a class="nav-link dropdown-toggle" id="UserDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
-              <span class="profile-text">Hello, Richard V.Welsh !</span>
+              <span class="profile-text">Hello, <?php echo $this->session->userdata('username');?></span>
               <img class="img-xs rounded-circle" src="images/faces/face1.jpg" alt="Profile image">
             </a>
             <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
@@ -182,7 +182,7 @@
             </div>
           </li> -->
           <li class="nav-item">
-            <a class="nav-link" href="<?= base_url();?>">
+            <a class="nav-link" href="<?= site_url("welcome");?>">
               <i class="menu-icon mdi mdi-television"></i>
               <span class="menu-title">Dashboard</span>
             </a>

@@ -10,12 +10,16 @@ class User extends CI_Controller{
 	public function index(){
 		$data['content'] =$this->M_Berita->news_top('berita');
 		$data['katalog'] =$this->M_User->kategori();
+		$data['populer'] =$this->M_User->populer();
+	    // print_r($data['populer']);	
 		$this->template->user('content/isi/index',$data);
 	}
-	public function berita(){
-		$id = $this->uri->segment(4);
+	function berita($id){
 		$data['katalog'] =$this->M_User->kategori();
-		$data['content']=$this->M_Berita->show_by_id('berita',$id);
+		$data['content'] =$this->M_Berita->show_by_id('berita',$id);
+		$kategori=$data['content']['kategori'];
+		$data['coment']  =$this->M_User->show_by_id('berita',$id);
+		$data['rekom']   =$this->M_User->rekom('berita',$kategori);
 		// print_r($data['content']);
 		$this->template->user('content/isi/berita',$data);
 	}
@@ -74,15 +78,40 @@ class User extends CI_Controller{
 	function search(){
 		$keyword = $this->input->post('query');
 		$result = $this->M_User->search($keyword);
-		$output ='<ul class="list-unstyled">';
+		$output ='<ul class="list-group">';
 		if ($result->num_rows() > 0) {
-			while ($row =$result->result_array()) {
-				$output .= '<li>'.$row["judul"].'</li>'; 
+			foreach ($result->result_array() as $row ) {
+				$output .= '<li class="list-group-item">'.$row["judul"].'</li>'; 
 			}
 		}else{
-			$output .='<li>News not found</li>';
+			$output .='<li class="list-group-item list-group-item-dark">News not found</li>';
 		}
 		$output .='</ul>';
 		echo $output;
+	}
+	function like(){
+		$id = $this->input->post('id');
+		$hasil=$this->M_User->ambil($id);
+		$data=[
+				"like" => ($hasil->like+1)
+		];
+		$this->M_User->like($id,$data);
+		echo json_encode($hasil->like);
+	}
+	function lilist(){
+		$data =$this->M_Berita->news_top('berita');
+		echo json_encode($data->like);
+	}
+	function coment(){
+		$data=[
+			"coment" => $this->input->post('coment'),
+			"date" => $this->input->post('date'),
+			"rating" => $this->input->post('rating'),
+			"id_user"=>$this->input->post('id_user'),
+			"id_berita"=>$this->input->post('id_berita')
+		];
+		$this->M_User->tambah('review',$data);
+		$id=$this->input->post('id_berita');
+		redirect("user/User/berita/$id");
 	}
  }

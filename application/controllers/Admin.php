@@ -9,12 +9,12 @@ class Admin extends CI_Controller {
 	}
 	public function index()
 	{
-		$data['content']=$this->M_Berita->ambil_id('user','admin');
+		$data['content']=$this->M_Berita->ambil_id_admin('user','user');
 		$this->template->ips('user/admin',$data);
 	}
 	public function user()
 	{
-		$data['content']=$this->M_Berita->ambil_id('user','user');
+		$data['content']=$this->M_Berita->ambil_id('user','admin');
 		$this->template->ips('user/user',$data);
 	}
 	public function delete(){
@@ -49,4 +49,19 @@ class Admin extends CI_Controller {
 		$this->session->set_flashdata('flash','Delete');
 		redirect('Admin');
 	}
+	public function block($id){
+		$data=[
+			"level" => "block"
+		];
+		$this->M_Berita->update_where('user',$data,$id);
+		redirect('Admin');
+	}
+	function unblock($id){
+		$data=[
+			"level" => "user"
+		];
+		$this->M_Berita->update_where('user',$data,$id);
+		redirect('Admin');
+	}
+	
 }

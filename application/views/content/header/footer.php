@@ -88,10 +88,27 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> The N
     <script src="<?= base_url();?>assets/user/js/bootstrap/popper.min.js"></script>
     <!-- Bootstrap js -->
     <script src="<?= base_url();?>assets/user/js/bootstrap/bootstrap.min.js"></script>
+    
     <!-- All Plugins js -->
     <script src="<?= base_url();?>assets/user/js/plugins/plugins.js"></script>
     <!-- Active js -->
     <script src="<?= base_url();?>assets/user/js/active.js"></script>
+    <script type="text/javascript">
+        function like(id){
+            $.ajax({
+                url:'<?= site_url("user/User/like");?>',
+                method:'POST',
+                data:{id:id},
+                success:function(data){
+                    alert('Terima kasih');
+                    console.log(data);
+                }
+            });
+        }
+    </script>
+    <script type="text/javascript">
+
+    </script>
     <script type="text/javascript">
         $(document).ready(function(){
             $('#search').keyup(function(){
@@ -110,7 +127,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> The N
             });
             $(document).on('click','li',function(){
                 $('#search').val($(this).text());
-                $('searchlist').fadeOut();
+                $('#searchlist').fadeOut();
             });
         });
     </script>

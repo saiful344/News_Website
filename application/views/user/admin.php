@@ -57,20 +57,30 @@
                                 aria-valuemax="100"></div>
                             </div>
                           </td>
-                          <td class="text-danger"> <?= $s->gender ;?>
+                          <?php if( $s->gender == "Male") : ?>
+                          <td class="text-success"> <?= $s->gender ;?>
+                            <i class="mdi mdi-arrow-up"></i> 
+                          <?php else : ?>
+                            <td class="text-primary"> <?= $s->gender ;?>
                             <i class="mdi mdi-arrow-down"></i>
-                          </td>
+                          <?php endif ?> 
                           <td>
                            <?= $s->email ;?>
                           </td>
                           <td>
                           <td>
-                          <a href="<?= site_url("Admin/edit/").$s->id;?>" class="btn btn-icons btn-rounded btn-outline-success">
-                          <i class="mdi mdi-cloud-download"></i>
-                          </a>
-                          <a href="<?= site_url("Admin/hapus/").$s->id;?>" class="btn btn-icons btn-rounded btn-outline-warning">
-                          <i class="mdi mdi-map-marker"></i>
-                          </a>
+                            <?php if ($s->level === "admin") {?>
+                            <a href="<?= site_url("Admin/block/").$s->id;?>" class="btn btn-icons btn-rounded btn-outline-success">
+                             <i class="fas fa-user-lock"></i>
+                            </a>
+                          <?php } else {?>
+                            <a href="<?= site_url("Admin/unblock/").$s->id;?>" class="btn btn-icons btn-rounded btn-outline-danger">
+                              <i class="fas fa-unlock"></i>
+                            </a>
+                          <?php }?>
+                           <a href="<?= site_url("Admin/hapus/").$s->id;?>" class="btn btn-icons btn-rounded btn-outline-warning">
+                              <i class="fas fa-trash"></i>
+                            </a>
                           </td>
                         </tr>
                         <?php endforeach ;?>

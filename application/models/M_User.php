@@ -47,6 +47,44 @@ class M_User extends CI_Model{
 		$this->db->like('judul',$keyword);
 		return $this->db->get();
 	}
+	function like($id,$data){
+		$this->db->where('id',$id);
+		$this->db->update('berita',$data);
+	}
+	function ambil($id){
+		$this->db->where('id',$id);
+		return $this->db->get('berita')->row();
+	}
+	function show_by_id($table,$id){
+		$this->db->where('berita.id',$id);
+		$this->db->from($table);
+		$this->db->select('review.rating,review.coment,review.id_user,review.date,user.username,user.gambar');
+		$this->db->join('review','berita.id = review.id_berita');
+		$this->db->join('user','review.id_user = user.id');
+		$this->db->order_by('review.date','DESC');
+		return $this->db->get()->result_array();
+	}
+	public function view_by_id($table,$id){
+		$this->db->where('id',$id);
+		return $this->db->get($table);
+	}
+	function tambah($table,$data){
+		$this->db->insert($table,$data);
+	}
+	function rekom($table,$kategori){
+		$this->db->where('kategori',$kategori);
+		$this->db->limit(2);
+		return $this->db->get($table)->result();
+	}
+	function populer(){
+		$this->db->from('berita');
+		$this->db->select('berita.gambar,berita.judul,berita.isi,berita.kategori');
+		$this->db->select('sum(review.rating) as hasil');
+		$this->db->join('review','berita.id = review.id_berita');
+		$this->db->group_by('berita.id');
+		$this->db->order_by('hasil','DESC');
+		return $this->db->get()->result();
+	}
 	}
 	// function top(){
 	// 	$this->db->from('berita');

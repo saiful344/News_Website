@@ -19,6 +19,7 @@ class News extends CI_Controller {
 	public function add()
 	{
 		$data['error']="";
+		$data['katalog']=$this->M_Berita->ambil('kategori');
 		$this->form_validation->set_rules("judul","Title","required");
 		$this->form_validation->set_rules("isi","Content","required");
 		$this->form_validation->set_rules("kategori","Kategory","required");
@@ -32,7 +33,8 @@ class News extends CI_Controller {
 			$this->load->library('upload',$config); 
         if( !$this->upload->do_upload('foto'))	{
             $error = array('error' => $this->upload->display_errors());
-				$this->template->ips('news/add',$error);
+            $data['katalog']=$this->M_Berita->ambil('kategori');
+				$this->template->ips('news/add',$error,$data);
 
 			} else {
 				$gambar=$this->upload->data();
@@ -54,6 +56,7 @@ class News extends CI_Controller {
 	{
 		$data['error']="";
 		$id=$this->uri->segment(3);
+		$data['katalog']=$this->M_Berita->ambil('kategori');
 		$data['content']=$this->M_Berita->show_by_id('berita',$id);
 		$this->form_validation->set_rules("judul","Title","required");
 		$this->form_validation->set_rules("isi","Content","required");
@@ -129,5 +132,9 @@ class News extends CI_Controller {
 			}
 			$output .='</ul>';
 			return $output;
+	}
+	function view($id){
+		$data['contain'] =$this->M_Berita->get_by_id('berita',$id);
+		$this->template->ips('news/view',$data);
 	}
 }

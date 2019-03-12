@@ -1,3 +1,9 @@
+<style type="text/css">
+    .isi{
+        overflow: scroll;
+        height: 450px;
+    }
+</style>
 <div class="mt-4"></div>
     <!-- ##### Blog Area Start ##### -->
     <div class="blog-area section-padding-0-80">
@@ -48,15 +54,16 @@
 
                         <div class="row">
                             <!-- Single Post -->
+                            <?php foreach ($rekom as $r ):?>
                             <div class="col-12 col-md-6">
                                 <div class="single-blog-post style-3 mb-80">
                                     <div class="post-thumb">
-                                        <a href="#"><img src="img/bg-img/12.jpg" alt=""></a>
+                                        <a href="#"><img src="<?= base_url();?>assets/image/<?= $r->gambar ?>" alt=""></a>
                                     </div>
                                     <div class="post-data">
-                                        <a href="#" class="post-catagory">Finance</a>
+                                        <a href="#" class="post-catagory"><?= $r->kategori ?></a>
                                         <a href="#" class="post-title">
-                                            <h6>Dolor sit amet, consectetur adipiscing elit. Nam eu metus sit amet odio sodales placer. Sed varius leo ac...</h6>
+                                            <h6><?= $r->judul ?></h6>
                                         </a>
                                         <div class="post-meta d-flex align-items-center">
                                             <a href="#" class="post-like"><img src="img/core-img/like.png" alt=""> <span>392</span></a>
@@ -65,82 +72,34 @@
                                     </div>
                                 </div>
                             </div>
+                        <?php endforeach ?>
 
-                            <!-- Single Post -->
-                            <div class="col-12 col-md-6">
-                                <div class="single-blog-post style-3 mb-80">
-                                    <div class="post-thumb">
-                                        <a href="#"><img src="img/bg-img/13.jpg" alt=""></a>
-                                    </div>
-                                    <div class="post-data">
-                                        <a href="#" class="post-catagory">Finance</a>
-                                        <a href="#" class="post-title">
-                                            <h6>Dolor sit amet, consectetur adipiscing elit. Nam eu metus sit amet odio sodales placer. Sed varius leo ac...</h6>
-                                        </a>
-                                        <div class="post-meta d-flex align-items-center">
-                                            <a href="#" class="post-like"><img src="img/core-img/like.png" alt=""> <span>392</span></a>
-                                            <a href="#" class="post-comment"><img src="img/core-img/chat.png" alt=""> <span>10</span></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
 
                         <!-- Comment Area Start -->
                         <div class="comment_area clearfix">
                             <h5 class="title">3 Comments</h5>
 
-                            <ol>
+                            <ol class="isi">
+                                <?php foreach($coment as $men):?>
                                 <!-- Single Comment Area -->
                                 <li class="single_comment_area">
                                     <!-- Comment Content -->
                                     <div class="comment-content d-flex">
                                         <!-- Comment Author -->
                                         <div class="comment-author">
-                                            <img src="img/bg-img/30.jpg" alt="author">
+                                            <img src="<?= base_url();?>assets/image/user/<?= $men['gambar'] ;?>" alt="author">
                                         </div>
                                         <!-- Comment Meta -->
                                         <div class="comment-meta">
-                                            <a href="#" class="post-author">Christian Williams</a>
-                                            <a href="#" class="post-date">April 15, 2018</a>
-                                            <p>Donec turpis erat, scelerisque id euismod sit amet, fermentum vel dolor. Nulla facilisi. Sed pellen tesque lectus et accu msan aliquam. Fusce lobortis cursus quam, id mattis sapien.</p>
-                                        </div>
-                                    </div>
-                                    <ol class="children">
-                                        <li class="single_comment_area">
-                                            <!-- Comment Content -->
-                                            <div class="comment-content d-flex">
-                                                <!-- Comment Author -->
-                                                <div class="comment-author">
-                                                    <img src="img/bg-img/31.jpg" alt="author">
-                                                </div>
-                                                <!-- Comment Meta -->
-                                                <div class="comment-meta">
-                                                    <a href="#" class="post-author">Sandy Doe</a>
-                                                    <a href="#" class="post-date">April 15, 2018</a>
-                                                    <p>Donec turpis erat, scelerisque id euismod sit amet, fermentum vel dolor. Nulla facilisi. Sed pellen tesque lectus et accu msan aliquam. Fusce lobortis cursus quam, id mattis sapien.</p>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ol>
-                                </li>
-
-                                <!-- Single Comment Area -->
-                                <li class="single_comment_area">
-                                    <!-- Comment Content -->
-                                    <div class="comment-content d-flex">
-                                        <!-- Comment Author -->
-                                        <div class="comment-author">
-                                            <img src="img/bg-img/32.jpg" alt="author">
-                                        </div>
-                                        <!-- Comment Meta -->
-                                        <div class="comment-meta">
-                                            <a href="#" class="post-author">Christian Williams</a>
-                                            <a href="#" class="post-date">April 15, 2018</a>
-                                            <p>Donec turpis erat, scelerisque id euismod sit amet, fermentum vel dolor. Nulla facilisi. Sed pellen tesque lectus et accu msan aliquam. Fusce lobortis cursus quam, id mattis sapien.</p>
+                                            <a href="#" class="post-author"><?= $men['username'] ;?></a>
+                                            <a href="#" class="post-date"><?= $men['date'] ;?></a>
+                                            <p><?= $men['coment'] ;?></p>
+                                            <p> <i class="fas fa-star"></i> <?= $men['rating'] ;?></p>
                                         </div>
                                     </div>
                                 </li>
+                            <?php endforeach ?>
                             </ol>
                         </div>
 
@@ -149,11 +108,23 @@
                             
                             <!-- Reply Form -->
                             <div class="contact-form-area">
-                                <form action="#" method="post">
+                                <form action="<?= site_url('user/User/coment');?>" method="post">
+                                <input type="hidden" name="id_user" value="<?= $this->session->userdata('id');?>">
+                                <input type="hidden" name="date" value="<?= date('d-m-y');?>">
+                                <input type="hidden" name="id_berita" value="<?= $content["id"];?>">
                                     <div class="row">
                                         <div class="col-12">
-                                            <textarea name="message" class="form-control" id="message" cols="30" rows="10" placeholder="Message"></textarea>
+                                            <textarea  class="form-control" name="coment" id="message" cols="30" rows="10" placeholder="Message"></textarea>
                                         </div>
+                                        <label class="mr-2">Rating</label>
+                                        <select name="rating">
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                        </select>
+                                        <label class="text-warning ml-2"> <i class="fas fa-star"></i></label>
                                         <div class="col-12 text-center">
                                             <button class="btn newspaper-btn mt-30 w-100" type="submit">Submit Comment</button>
                                         </div>
@@ -191,55 +162,20 @@
                     </div>
                         <!-- Latest Comments Widget -->
                         <div class="latest-comments-widget">
-                            <h3>Latest Comments</h3>
+                            <h3>Iklan</h3>
 
                             <!-- Single Comments -->
                             <div class="single-comments d-flex">
-                                <div class="comments-thumbnail mr-15">
-                                    <img src="img/bg-img/29.jpg" alt="">
-                                </div>
-                                <div class="comments-text">
-                                    <a href="#">Jamie Smith <span>on</span> Facebook is offering facial recognition...</a>
-                                    <p>06:34 am, April 14, 2018</p>
-                                </div>
-                            </div>
-
-                            <!-- Single Comments -->
-                            <div class="single-comments d-flex">
-                                <div class="comments-thumbnail mr-15">
-                                    <img src="img/bg-img/30.jpg" alt="">
-                                </div>
-                                <div class="comments-text">
-                                    <a href="#">Jamie Smith <span>on</span> Facebook is offering facial recognition...</a>
-                                    <p>06:34 am, April 14, 2018</p>
-                                </div>
-                            </div>
-
-                            <!-- Single Comments -->
-                            <div class="single-comments d-flex">
-                                <div class="comments-thumbnail mr-15">
-                                    <img src="img/bg-img/31.jpg" alt="">
-                                </div>
-                                <div class="comments-text">
-                                    <a href="#">Jamie Smith <span>on</span> Facebook is offering facial recognition...</a>
-                                    <p>06:34 am, April 14, 2018</p>
-                                </div>
-                            </div>
-
-                            <!-- Single Comments -->
-                            <div class="single-comments d-flex">
-                                <div class="comments-thumbnail mr-15">
-                                    <img src="img/bg-img/32.jpg" alt="">
-                                </div>
-                                <div class="comments-text">
-                                    <a href="#">Jamie Smith <span>on</span> Facebook is offering facial recognition...</a>
-                                    <p>06:34 am, April 14, 2018</p>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
             </div>
     </div>
+</div>
 
 
+<script type="text/javascript">
+    $(document).ready(function(){
+    $("html, body").animate({ scrollTop: $(".isi").scrollTop() }, 1000);
+    });
+</script>

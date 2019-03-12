@@ -16,8 +16,14 @@
                             <div class="login-search-area d-flex align-items-center">
                                 <!-- Login -->
                                 <div class="login d-flex">
-                                    <a href="<?= site_url("Login");?>">Login</a>
-                                    <a href="<?= site_url("Login/register");?>">Register</a>
+                                 <?php if ($this->session->userdata('username')) {?>
+                                    <a href="<?= site_url("Login/logout");?>">Log out</a>
+
+                                <?php } else {?> 
+                                    <a href="<?= site_url("Login/register");?>">Login</a>
+                                    <a href="<?= site_url("Login/logout");?>">Register</a>
+                               <?php }?>
+                               
                                 </div>
                                 <!-- Search Form -->
                                 <div class="search-form">
